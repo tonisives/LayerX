@@ -26,7 +26,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		if let window = NSApp.windows.first as? MCWIndow {
 			window.fitsWithSize(NSMakeSize(480, 320))
-			window.collectionBehavior = [.managed, .moveToActiveSpace]
+            window.collectionBehavior = [.managed, .moveToActiveSpace]
+            
+            window.setFrame(CGRect(x: (window.screen?.visibleFrame.width)! / 2 - 65,
+                            y: 0,
+                            width: 130,
+                            height: 200), display: true)
+            
+            window.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
+
 			self.window = window
 		}
 	}
@@ -83,8 +91,21 @@ extension AppDelegate {
 	@IBAction func reduceTransparency(_ sender: AnyObject) {
 		var alpha = viewController.imageView.alphaValue
 		alpha += 0.1
-		viewController.imageView.alphaValue = min(alpha, 1.0)
+		viewController.imageView.alphaValue =
+            min(alpha, 1.0)
 	}
+        
+    @IBAction func imageOne(_ sender: AnyObject?) {
+        viewController.imageView.image = NSImage(named: "insert")
+    }
+
+    @IBAction func imageTwo(_ sender: AnyObject?) {
+        viewController.imageView.image = NSImage(named: "normal")
+    }
+
+    @IBAction func imageThree(_ sender: AnyObject?) {
+        viewController.imageView.image = NSImage(named: "visual")
+    }
 	
 	func getPasteboardImage() -> NSImage? {
 		let pasteboard = NSPasteboard.general;

@@ -10,100 +10,108 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-	@IBOutlet weak var imageView: MCDragAndDropImageView!
-	@IBOutlet weak var sizeTextField: NSTextField!
-	@IBOutlet weak var placeholderTextField: NSTextField!
-	@IBOutlet weak var lockIconImageView: NSImageView!
+    @IBOutlet weak var imageView: MCDragAndDropImageView!
+    @IBOutlet weak var sizeTextField: NSTextField!
+    @IBOutlet weak var placeholderTextField: NSTextField!
+    @IBOutlet weak var lockIconImageView: NSImageView!
 
-	override var acceptsFirstResponder: Bool {
-		return true
-	}
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
 
-	lazy var trackingArea: NSTrackingArea = {
-		let options: NSTrackingArea.Options = [.activeAlways, .mouseEnteredAndExited]
-		return NSTrackingArea(rect: self.view.bounds, options: options, owner: self, userInfo: nil)
-	}()
+    lazy var trackingArea: NSTrackingArea = {
+        let options: NSTrackingArea.Options = [.activeAlways, .mouseEnteredAndExited]
+        return NSTrackingArea(rect: self.view.bounds, options: options, owner: self, userInfo: nil)
+    }()
 
-	deinit {
-		NotificationCenter.default.removeObserver(self)
-	}
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		appDelegate().viewController = self
-	}
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        appDelegate().viewController = self
+    }
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-		imageView.delegate = self
+        imageView.delegate = self
 
-		sizeTextField.layer?.cornerRadius = 3
-		sizeTextField.layer?.masksToBounds = true
+        sizeTextField.layer?.cornerRadius = 3
+        sizeTextField.layer?.masksToBounds = true
 
-		lockIconImageView.wantsLayer = true
-		lockIconImageView.layer?.backgroundColor = NSColor(white: 0.0, alpha: 0.5).cgColor
-		lockIconImageView.layer?.cornerRadius = 5
-		lockIconImageView.layer?.masksToBounds = true
+        lockIconImageView.wantsLayer = true
+        lockIconImageView.layer?.backgroundColor = NSColor(white: 0.0, alpha: 0.5).cgColor
+        lockIconImageView.layer?.cornerRadius = 5
+        lockIconImageView.layer?.masksToBounds = true
 
-		NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize(_:)), name: NSWindow.didResizeNotification, object: appDelegate().window)
+        NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize(_:)), name: NSWindow.didResizeNotification, object: appDelegate().window)
 
-		view.addTrackingArea(trackingArea)
-	}
+        view.addTrackingArea(trackingArea)
 
-	@objc func fadeOutSizeTextField() {
-		let transition = CATransition()
-		sizeTextField.layer?.add(transition, forKey: "fadeOut")
-		sizeTextField.layer?.opacity = 0
-	}
+        placeholderTextField.isHidden = true
+        appDelegate().imageOne(nil)
+        imageView.alphaValue = 0.7
+    }
 
-	@objc func windowDidResize(_ notification: Notification) {
-		let window = notification.object as! NSWindow
-		let size = window.frame.size
-		sizeTextField.stringValue = "\(Int(size.width))x\(Int(size.height))"
-		sizeTextField.layer?.opacity = 1
+    override func viewDidAppear() {
+        super.viewDidAppear()
+    }
 
-		NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(ViewController.fadeOutSizeTextField), object: nil)
-		perform(#selector(ViewController.fadeOutSizeTextField), with: nil, afterDelay: 2)
-	}
+    @objc func fadeOutSizeTextField() {
+        let transition = CATransition()
+        sizeTextField.layer?.add(transition, forKey: "fadeOut")
+        sizeTextField.layer?.opacity = 0
+    }
 
-	// MARK: Mouse events
+    @objc func windowDidResize(_ notification: Notification) {
+        let window = notification.object as! NSWindow
+        let size = window.frame.size
+        sizeTextField.stringValue = "\(Int(size.width))x\(Int(size.height))"
+        sizeTextField.layer?.opacity = 1
 
-	override func scrollWheel(with theEvent: NSEvent) {
-		guard let _ = imageView.image else { return }
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(ViewController.fadeOutSizeTextField), object: nil)
+        perform(#selector(ViewController.fadeOutSizeTextField), with: nil, afterDelay: 2)
+    }
 
-		let delta = theEvent.deltaY * 0.005;
-		var alpha = imageView.alphaValue - delta
-		alpha = min(alpha, 1)
-		alpha = max(alpha, 0.05)
-		imageView.alphaValue = alpha
-	}
+    // MARK: Mouse events
 
-	override func mouseEntered(with theEvent: NSEvent) {
-		sizeTextField.layer?.opacity = 1
-	}
+    override func scrollWheel(with theEvent: NSEvent) {
+        guard let _ = imageView.image else { return }
 
-	override func mouseExited(with theEvent: NSEvent) {
-		fadeOutSizeTextField()
-	}
+        let delta = theEvent.deltaY * 0.005;
+        var alpha = imageView.alphaValue - delta
+        alpha = min(alpha, 1)
+        alpha = max(alpha, 0.05)
+        imageView.alphaValue = alpha
+    }
+
+    override func mouseEntered(with theEvent: NSEvent) {
+        sizeTextField.layer?.opacity = 1
+    }
+
+    override func mouseExited(with theEvent: NSEvent) {
+        fadeOutSizeTextField()
+    }
 }
 
 // MARK: - MCDragAndDropImageViewDelegate
 
 extension ViewController: MCDragAndDropImageViewDelegate {
-	func dragAndDropImageViewDidDrop(_ imageView: MCDragAndDropImageView) {
+    func dragAndDropImageViewDidDrop(_ imageView: MCDragAndDropImageView) {
 
-		sizeTextField.isHidden = false
-		placeholderTextField.isHidden = true
+        sizeTextField.isHidden = false
+        placeholderTextField.isHidden = true
 
-		appDelegate().actualSize(nil)
-	}
+        appDelegate().actualSize(nil)
+    }
 }
 
 // MARK: - Movable NSView
 
-class MCMovableView: NSView{
-	override var mouseDownCanMoveWindow:Bool {
-		return true
-	}
+class MCMovableView: NSView {
+    override var mouseDownCanMoveWindow: Bool {
+        return true
+    }
 }

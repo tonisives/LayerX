@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -211,6 +212,24 @@
                                                 <action selector="toggleSizeVisibility:" target="Voe-Tx-rLC" id="e8c-Wd-zRh"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Image 1" id="Su0-x3-F0h">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="imageOne:" target="Voe-Tx-rLC" id="QEH-gg-Dje"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Image 2" id="gct-3P-Gef">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="imageTwo:" target="Voe-Tx-rLC" id="RuZ-24-Y71"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Image 3" id="Kf0-nr-P11">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="imageThree:" target="Voe-Tx-rLC" id="gwf-9V-Mhd"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -270,7 +289,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="MCWIndow" customModule="LayerX" customModuleProvider="target">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="MCWIndow" customModule="LayerX" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="515" y="487" width="480" height="270"/>
@@ -308,7 +327,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Vs-Az-CYd">
-                                <rect key="frame" x="148" y="123" width="184" height="25"/>
+                                <rect key="frame" x="148" y="123" width="184" height="24"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Drop Images here." id="vTq-g5-aKV">
                                     <font key="font" size="20" name="HelveticaNeue-Bold"/>
                                     <color key="textColor" name="scrollBarColor" catalog="System" colorSpace="catalog"/>
@@ -350,6 +369,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lock" width="32" height="32"/>
+        <image name="lock" width="16" height="16"/>
     </resources>
 </document>
