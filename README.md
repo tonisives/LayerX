@@ -2,7 +2,6 @@
 
 Adds 3 vim images that can be shuffled from the menu selection.
 
-Inline-style: 
 ![demo](https://github.com/tonisives/LayerX/raw/master/vim-demo.gif)
 
 
