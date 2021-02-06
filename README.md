@@ -1,6 +1,6 @@
 # LayerX vim modes
 
-Adds 3 vim images that can be shuffled from the menu selection.
+Adds 3 vim images that can be shuffled from the menu selection
 
 ![demo](https://github.com/tonisives/LayerX/raw/master/vim-demo.gif)
 
